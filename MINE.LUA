@@ -1,22 +1,32 @@
 --[[
 @title 2d Minecraft
 @param n Gamemode
+@default n 1
 @values n Survival Creative
 @param o Load World
+@default o 2
 @values o Yes No
 @param a blockX
+@default a 0
 @param b blockY
+@default b 0
 --]]
-map={}
+-- About above comment: CHDK's script parameter must have a @default assign or else they will be displayed wrong.
+-- The Load World option default is No,because,the players haven't a vaild map.
 
-if o==0 then
-world=file_browser("A/CHDK/SCRIPTS")
-save=io.open(world)--("A/CHDK/SCRIPTS/TESTG.TXT","r")
-world1=save:read("*line")
-for i=1,1100 do
-map[i]=tonumber(world1:sub(i,i))
+map = {}
+
+-- use local variables for speed and mem
+-- maybe this should in init()
+if o == 0 then -- load existing map
+worldPath = file_browser("A/CHDK/SCRIPTS") -- maybe in "A/CHDK/GAMES" ?
+local rawSave = io.open(world)   --("A/CHDK/SCRIPTS/TESTG.TXT","r")
+-- world1 is not easier to understand code,prev should use worldPath(java style,lower Camel Case,:))
+world = rawSave:read("*line")
+for i = 1,1100 do
+map[i] = tonumber(world:sub(i,i))
 end
-save:close()
+rawSave:close()
 end
 
 lookX=0
@@ -25,8 +35,8 @@ play=1
 h=1
 l=1
 load=1
-blockX=a
-blockY=b
+blockX = a
+blockY = b
 blocks={"air","dirt","stone","planks","wood","leaves","sand"}
 texture={266,94,23,92,95,263,174}
 inv={0,0,0,0,0,0,0}

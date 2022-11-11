@@ -29,46 +29,52 @@ end
 rawSave:close()
 end
 
-lookX=0
-lookY=0
-play=1
-h=1
-l=1
-load=1
+lookX = 0
+lookY = 0
+play = 1
+h = 1
+l = 1
+load = 1
 blockX = a
 blockY = b
-blocks={"air","dirt","stone","planks","wood","leaves","sand"}
-texture={266,94,23,92,95,263,174}
-inv={0,0,0,0,0,0,0}
-invnt={}
-for i=1,27 do
-invnt[i]={0,0}
+blocks = {"air","dirt","stone","planks","wood","leaves","sand"}
+-- Here,I have a idea: write a file contains lua draw statements
+-- and run it at render,to draw a block
+-- so we can have a real 2d texture,instead of color.
+-- But this solution will eat many mem
+texture = {266,94,23,92,95,263,174} -- Block's texture is color? really simple...
+inv = {0,0,0,0,0,0,0}
+invnt = {}
+for i = 1,27 do
+  invnt[i]={0,0}
 end
-holding=(blocks[h])
-pi=0
-po=0
-ps=0
-z=1
-mode="move"
-change=0
-items={"planks"}
+holding = (blocks[h])
+pi = 0
+po = 0
+ps = 0
+z = 1
+mode = "move"
+change = 0
+items = {"planks"}
 
+-- I need some explain about it...
 function updateInv()
-for i=1,6 do
-if inv[i+1]<65 then
-invnt[i]={i+1,inv[i+1]}
+  for i = 1,6 do
+    if inv[i + 1]<65 then
+      invnt[i]={i + 1,inv[i + 1]}
+    end
+    end
 end
-end
-end
-updateInv()
+
+updateInv() -- ?
 
 function block()
-if n==0 and holding=="air" then
-inv[map[l]]=(inv[map[l]])+1
-map[l]=1
-ps=1
-render()
-end
+  if n == 0 and holding == "air" then
+    inv[map[l]] = (inv[map[l]]) + 1
+    map[l] = 1
+    ps = 1
+    render()
+  end
 if h~=1 and n==0 and inv[h]~=0 then
 map[l]=(h)
 inv[h]=(inv[h])-1
@@ -289,8 +295,7 @@ end
 end
 
 render()
-
-while play==1 do
-key()
---print ("")
+-- change play to isRunning,like real minecraft :-)
+while isRunning do
+  key()
 end
